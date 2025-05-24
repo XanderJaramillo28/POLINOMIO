@@ -62,6 +62,8 @@ public class FrmPolinomios extends JFrame {
 
         setSize(600, 450);
         setTitle("Polinomios");
+        setIconImage(new ImageIcon(getClass().getResource("/IMAGEN/polinomio.png")).getImage());
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
