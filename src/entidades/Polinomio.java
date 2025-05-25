@@ -12,43 +12,55 @@ public class Polinomio {
     }
 
     public void agregar(Nodo nuevo) {
-        if (cabeza == null) {
+    if (nuevo == null || nuevo.getCoeficiente() == 0) return;
+
+    // Caso 1: lista vacía
+    if (cabeza == null) {
+        cabeza = nuevo;
+        return;
+    }
+
+    // Caso 2: insertar al inicio si tiene mayor exponente
+    if (nuevo.getExponente() > cabeza.getExponente()) {
+        nuevo.siguiente = cabeza;
+        cabeza = nuevo;
+        return;
+    }
+
+    Nodo actual = cabeza;
+    Nodo anterior = null;
+
+    // Avanzar hasta encontrar la posición correcta
+    while (actual != null && nuevo.getExponente() < actual.getExponente()) {
+        anterior = actual;
+        actual = actual.siguiente;
+    }
+
+    // Caso 3: mismo exponente => sumar coeficientes
+    if (actual != null && actual.getExponente() == nuevo.getExponente()) {
+        double sumaCoef = actual.getCoeficiente() + nuevo.getCoeficiente();
+
+        if (sumaCoef == 0) {
+            // Eliminar nodo si la suma da 0
+            if (anterior == null) {
+                cabeza = actual.siguiente;
+            } else {
+                anterior.siguiente = actual.siguiente;
+            }
+        } else {
+            actual.setCoeficiente(sumaCoef);
+        }
+
+    } else {
+        // Caso 4: insertar nuevo nodo entre anterior y actual
+        nuevo.siguiente = actual;
+        if (anterior == null) {
             cabeza = nuevo;
         } else {
-            if (nuevo.getExponente() > cabeza.getExponente()) {
-                nuevo.siguiente = cabeza;
-                cabeza = nuevo;
-            } else {
-                Nodo actual = cabeza;
-                Nodo anterior = null;
-                while (actual != null && nuevo.getExponente() < actual.getExponente()) {
-                    anterior = actual;
-                    actual = actual.siguiente;
-                }
-
-                if (actual != null && actual.getExponente() == nuevo.getExponente()) {
-                    double sumaCoef = actual.getCoeficiente() + nuevo.getCoeficiente();
-                    if (sumaCoef == 0) {
-                        if (anterior == null) {
-                            cabeza = actual.siguiente;
-                        } else {
-                            anterior.siguiente = actual.siguiente;
-                        }
-                    } else {
-                        actual.setCoeficiente(sumaCoef);
-                    }
-                } else {
-                    if (anterior == null) {
-                        nuevo.siguiente = cabeza;
-                        cabeza = nuevo;
-                    } else {
-                        anterior.siguiente = nuevo;
-                        nuevo.siguiente = actual;
-                    }
-                }
-            }
+            anterior.siguiente = nuevo;
         }
     }
+}
 
     public void limpiar() {
         cabeza = null;

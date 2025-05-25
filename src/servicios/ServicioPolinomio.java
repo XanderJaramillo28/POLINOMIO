@@ -66,29 +66,30 @@ public class ServicioPolinomio {
     }
 
     public static Polinomio multiplicarPorMonomio(Polinomio p, Nodo monomio) {
-        if (p == null) {
-            throw new IllegalArgumentException("El polinomio no puede ser nulo");
-        }
-        if (monomio == null) {
-            throw new IllegalArgumentException("El monomio no puede ser nulo");
-        }
-
-        Polinomio resultado = new Polinomio();
-        Nodo actual = p.getCabeza();
-
-        while (actual != null) {
-            int nuevoExponente = actual.getExponente() + monomio.getExponente();
-            double nuevoCoeficiente = actual.getCoeficiente() * monomio.getCoeficiente();
-
-            if (nuevoCoeficiente != 0) {
-                resultado.agregar(new Nodo(nuevoExponente, nuevoCoeficiente));
-            }
-
-            actual = actual.siguiente;
-        }
-
-        return resultado;
+    if (p == null) {
+        throw new IllegalArgumentException("El polinomio no puede ser nulo");
     }
+    if (monomio == null) {
+        throw new IllegalArgumentException("El monomio no puede ser nulo");
+    }
+
+    Polinomio resultado = new Polinomio();
+    Nodo actual = p.getCabeza();
+
+    while (actual != null) {
+        int nuevoExponente = actual.getExponente() + monomio.getExponente();
+        double nuevoCoeficiente = actual.getCoeficiente() * monomio.getCoeficiente();
+
+        if (nuevoCoeficiente != 0) {
+            resultado.agregar(new Nodo(nuevoExponente, nuevoCoeficiente));
+        }
+
+        actual = actual.siguiente;
+    }
+
+    return resultado;
+}
+
 
     public static Polinomio multiplicar(Polinomio p1, Polinomio p2) {
         Polinomio resultado = new Polinomio();
